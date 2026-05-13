@@ -65,7 +65,7 @@ plt.show()
 ```
 
 ## Output:
-![logistic regression using gradient descent](sam.png)
+<img width="912" height="488" alt="image" src="https://github.com/user-attachments/assets/7d5c97a7-cc06-4afb-bd9f-def97eeb89ae" />
 
 
 ## Result:
