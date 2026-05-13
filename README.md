@@ -8,18 +8,60 @@ To write a program to implement the the Logistic Regression Using Gradient Desce
 2. Anaconda – Python 3.7 Installation / Jupyter notebook
 
 ## Algorithm
-1. 
-2. 
-3. 
-4. 
+### 1. Load and Prepare Data Read the dataset, convert placement status into binary values, select features, and normalize the data.
+### 2.Initialize Model Parameters ,Define sigmoid and cost functions, initialize weights (theta) and learning rate.
+### 3.Train Using Gradient Descent Calculate predictions, find gradients, and update weights repeatedly for several iterations.
+### 4.Evaluate and Display Results Predict placement results, calculate accuracy, and plot the cost function graph.
 
 ## Program:
+
+### Program to implement the the Logistic Regression Using Gradient Descent.
+### Developed by: Kabilan S
+### RegisterNumber:  212225230119
 ```
-/*
-Program to implement the the Logistic Regression Using Gradient Descent.
-Developed by: 
-RegisterNumber:  
-*/
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+from sklearn.preprocessing import StandardScaler
+data = pd.read_csv("Placement_Data.csv")
+data['status'] = data['status'].map({'Placed': 1, 'Not Placed': 0})
+
+X = data[['ssc_p', 'mba_p']].values
+y = data['status'].values
+scaler = StandardScaler()
+X = scaler.fit_transform(X)
+
+m = len(y)
+X = np.c_[np.ones(m), X]
+
+def sigmoid(z):
+    return 1 / (1 + np.exp(-z))
+def cost_function(X, y, theta):
+    h = sigmoid(X @ theta)
+    return (-1/m) * np.sum(y*np.log(h) + (1-y)*np.log(1-h))
+
+theta = np.zeros(X.shape[1])
+alpha = 0.1
+cost_history = []
+
+for i in range(500):
+    z = X @ theta
+    h = sigmoid(z)
+    gradient = (1/m) * X.T @ (h - y)
+    theta = theta - alpha * gradient
+    
+    cost = cost_function(X, y, theta)
+    cost_history.append(cost)
+y_pred = (sigmoid(X @ theta) >= 0.5).astype(int)
+accuracy = np.mean(y_pred == y) * 100
+print("Weights:", theta)
+print("Accuracy:", accuracy, "%")
+plt.figure()
+plt.plot(cost_history)
+plt.xlabel("Iterations")
+plt.ylabel("Cost")
+plt.title("Logistic Regression using Gradient Descent")
+plt.show()
 ```
 
 ## Output:
